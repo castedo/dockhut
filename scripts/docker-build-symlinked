@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+LEN=$#
+if [[ $LEN -eq 0 ]]; then
+  echo "Usage: $0 [docker_build_options] {dockerfile_directory}"
+  docker help build
+  exit 65 # E_BADARGS
+fi
+
+LAST=${!LEN}
+REST=${@:1:$LEN-1}
+CMD="tar --to-stdout --create --dereference --directory $LAST . | docker build $REST -"
+echo $CMD
+eval $CMD
+

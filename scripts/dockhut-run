@@ -1,0 +1,26 @@
+#!/bin/bash
+set -e
+
+HUTU=$1
+PORT=$2
+
+if [[ -z "$HUTU" || -z "$PORT" ]]; then
+  echo "Usage: $0 {hut_user} {ssh_port}"
+  exit 65 # E_BADARGS
+fi
+
+if ! getent passwd $HUTU > /dev/null; then
+  echo "No user '$HUTU'"
+  exit 65 # E_BADARGS
+fi
+
+docker run -d --restart=always \
+    -p $PORT:22 \
+    --name $HUTU-hut \
+    -e HOSTNAME=$HUTU-hut \
+    -v /home/$HUTU/huthome:/home/$HUTU \
+    -v /home/$HUTU/hutetc:/etc/hut \
+    ellerhut
+
+echo $0 done.
+

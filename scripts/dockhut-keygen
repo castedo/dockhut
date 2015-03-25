@@ -1,0 +1,22 @@
+#!/bin/bash
+set -e
+
+HUTU=$1
+
+if [[ -z "$HUTU" ]]; then
+  echo "Usage: $0 {hut_user}"
+  exit 65 # E_BADARGS
+fi
+
+mkdir -p /home/$HUTU/hutetc
+
+RSA_KEY=/home/$HUTU/hutetc/ssh_host_rsa_key
+ssh-keygen -t rsa -f $RSA_KEY -C "$HUTU-hut" -N ''
+chgrp ssh_keys $RSA_KEY
+chmod 640 $RSA_KEY
+
+ECDSA_KEY=/home/$HUTU/hutetc/ssh_host_ecdsa_key
+ssh-keygen -t ecdsa -f $ECDSA_KEY -C "$HUTU-hut" -N ''
+chgrp ssh_keys $ECDSA_KEY
+chmod 640 $ECDSA_KEY
+

@@ -1,0 +1,28 @@
+#!/bin/bash
+set -e
+
+HUTU=$1
+
+if [[ -z "$HUTU" ]]; then
+  echo "Usage: $0 {hut_user}"
+  exit 65 # E_BADARGS
+fi
+
+HOSTHOME=/home/$HUTU
+if [[ ! -e $HOSTHOME ]]; then
+  mkdir -p $HOSTHOME
+  chcon -R -t svirt_sandbox_file_t $HOSTHOME
+  semanage fcontext -a -t svirt_sandbox_file_t $HOSTHOME
+fi
+
+useradd --shell /usr/sbin/nologin --home-dir $HOSTHOME --no-create-home $HUTU
+
+HUTHOME=$HOSTHOME/huthome
+if [[ ! -e $HUTHOME ]]; then
+  mkdir -p $HUTHOME/.ssh
+  chmod -R 700 $HUTHOME
+  chown -R $HUTU: $HUTHOME
+fi
+
+echo $0 done.
+

@@ -1,0 +1,27 @@
+name: dockhut
+arch: all
+summary: dockhut scripts and Dockfile
+description: |
+  Scripts and dockerfiles for Dockerized user "hut" containers with running
+  sshd daemon and exposed ssh port and automatically replicated users accounts
+
+requires:
+- docker
+- coreutils
+- policycoreutils-python
+cmake: |
+  install(PROGRAMS
+            dockhut-useradd
+            dockhut-keygen
+            dockhut-run
+            docker-build-symlinked
+          DESTINATION /usr/sbin)
+changelog:
+- version: 1.1
+  when: Wed Mar 25 2015
+  who: Castedo Ellerman <castedo@castedo.com>
+  what: add docker-build-symlinked
+- version: 1.0
+  when: Wed Mar 25 2015
+  who: Castedo Ellerman <castedo@castedo.com>
+  what: first working public version
