@@ -1,5 +1,6 @@
-dockhut ![Dock hut](http://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/EcoTourismDocksChicoasen.jpg/320px-EcoTourismDocksChicoasen.jpg)
+dockhut
 =======
+<img align="right" src="http://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/EcoTourismDocksChicoasen.jpg/320px-EcoTourismDocksChicoasen.jpg" alt="Dock Hut">
 
 Scripts and dockerfiles for Dockerized user "hut" containers with sshd daemon
 and automatically setup user account. The normal use case is a single "hut"
