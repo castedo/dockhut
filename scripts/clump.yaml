@@ -17,6 +17,10 @@ cmake: |
             docker-build-symlinked
           DESTINATION /usr/sbin)
 changelog:
+- version: 1.2
+  when: Thu Mar 26 2015
+  who: Castedo Ellerman <castedo@castedo.com>
+  what: must specify docker image to run; clean up help text
 - version: 1.1
   when: Wed Mar 25 2015
   who: Castedo Ellerman <castedo@castedo.com>

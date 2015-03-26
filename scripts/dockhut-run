@@ -3,9 +3,10 @@ set -e
 
 HUTU=$1
 PORT=$2
+IMAGE=$3
 
-if [[ -z "$HUTU" || -z "$PORT" ]]; then
-  echo "Usage: $0 {hut_user} {ssh_port}"
+if [[ -z "$HUTU" || -z "$PORT" || -z "$IMAGE" ]]; then
+  echo "Usage: $(basename $0) HUTUSER SSHPORT IMAGE"
   exit 65 # E_BADARGS
 fi
 
@@ -20,7 +21,7 @@ docker run -d --restart=always \
     -e HOSTNAME=$HUTU-hut \
     -v /home/$HUTU/huthome:/home/$HUTU \
     -v /home/$HUTU/hutetc:/etc/hut \
-    ellerhut
+    $IMAGE 
 
 echo $0 done.
 

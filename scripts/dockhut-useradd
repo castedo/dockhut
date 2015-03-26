@@ -4,7 +4,7 @@ set -e
 HUTU=$1
 
 if [[ -z "$HUTU" ]]; then
-  echo "Usage: $0 {hut_user}"
+  echo "Usage: $(basename $0) HUTUSER"
   exit 65 # E_BADARGS
 fi
 

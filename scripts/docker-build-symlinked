@@ -3,7 +3,7 @@ set -e
 
 LEN=$#
 if [[ $LEN -eq 0 ]]; then
-  echo "Usage: $0 [docker_build_options] {dockerfile_directory}"
+  echo "Usage: $(basename $0) [OPTIONS] PATH"
   docker help build
   exit 65 # E_BADARGS
 fi
