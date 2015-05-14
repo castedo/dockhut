@@ -15,3 +15,5 @@ COPY enter-hut /root/
 
 ENTRYPOINT ["/root/enter-hut"]
 
+CMD ["/usr/sbin/sshd", "-D"]
+
