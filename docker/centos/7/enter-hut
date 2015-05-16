@@ -1,21 +1,26 @@
 #!/usr/bin/python -t3
-
 import os, sys, subprocess, pwd
+
+if (len(sys.argv) < 2):
+  sys.exit("Usage: " + sys.argv[0] + " cmd [args...]")
 
 (home, subdirs, _) = os.walk('/home').next()
 for username in subdirs:
-  f = os.stat(os.path.join(home, username))
+  # get user/group ID assigned to home directory, setup user if needed
+  fs = os.stat(os.path.join(home, username))
   try:
-    owner = pwd.getpwuid(f.st_uid)
+    owner = pwd.getpwuid(fs.st_uid)
     if owner.pw_name != username:
-      msg = "User ID {0} named {1} in hut and not {2} as in host."
-      raise RuntimeError(msg.format(f.st_uid, owner.pw_name, username))
+      msg = "User ID {0} named {1} in container and not {2} as in host."
+      raise RuntimeError(msg.format(fs.st_uid, owner.pw_name, username))
   except KeyError:
+    # no user for UID fs.st_uid so create one
+    subprocess.call(["groupadd", "--gid", str(fs.st_gid), username])
     subprocess.call(["useradd", "--no-create-home",
-                                "--uid", str(f.st_uid),
+                                "--uid", str(fs.st_uid),
+                                "--gid", str(fs.st_gid),
                                 username])
-    subprocess.call(["groupadd", "--gid", str(f.st_gid), username])
 
-args = sys.argv[1:]
-os.execvp(args[0], args)
+cmdline = sys.argv[1:]
+os.execvp(cmdline[0], cmdline)
 
